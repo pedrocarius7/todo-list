@@ -1,25 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+
+  let [lista , setLista] = useState(["Wake up","Take a shit","Eat","Get out of bed","Have breakfast"]);
+  let [novoItem, setNovoItem] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <>
+   <input value={novoItem} onChange={value => setNovoItem(value.target.value)} type="text"/>
+   <button onClick={() => adicionarNovoItem() }>Adicionar</button>
+   <ul>
+      {lista.map((item, index) => (
+      <li>
+        {item}
+        <button onClick={() => deletarItem(index)}>
+          ✔
+        </button>
+      </li>
+      ))}
+   </ul>
+   </>
   );
+
+  function adicionarNovoItem() {
+    setLista([...lista, novoItem]);
+    setNovoItem("");
+  }
+
+  function deletarItem(index) {
+    let tmpArray = [...lista]
+    tmpArray.splice(index, 1);
+  
+    setLista(tmpArray);
+  }
 }
 
 export default App;
